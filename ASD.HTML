@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercício de Fixação</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="alunos">
+        <input type="text" id="al1" />
+        <input type="text" id="al2" />
+        <input type="text" id="al3" />
+        <input type="text" id="al4" />
+        <input type="text" id="al5" />
+      </div>
+      <div class="notas matematica">
+        <input type="number" id="mat1" />
+        <input type="number" id="mat2" />
+        <input type="number" id="mat3" />
+        <input type="number" id="mat4" />
+        <input type="number" id="mat5" />
+      </div>
+      <div class="notas portugues">
+        <input type="number" id="pt1" />
+        <input type="number" id="pt2" />
+        <input type="number" id="pt3" />
+        <input type="number" id="pt4" />
+        <input type="number" id="pt5" />
+      </div>
+      <div class="notas historia">
+        <input type="number" id="his1" />
+        <input type="number" id="his2" />
+        <input type="number" id="his3" />
+        <input type="number" id="his4" />
+        <input type="number" id="his5" />
+      </div>
+      <div class="resultado" id="result"></div>
+    </div>
+    <div class="botoes">
+        <button onclick="receberNotas()">Receber Notas</button>
+        <button onclick="verificarMateria()">Calcular Média</button>
+        <select name="materia" id="materia">
+            <option value="pt">Português</option>
+            <option value="mat">Matemática</option>
+            <option value="his">História</option>
+        </select>
+    </div>
+
+    <script>
+        var matrizNotas = [];
+        const result = document.getElementById("result");
+
+        function receberNotas() {
+            const alunos = [
+                document.getElementById("al1").value,
+                document.getElementById("al2").value,
+                document.getElementById("al3").value,
+                document.getElementById("al4").value,
+                document.getElementById("al5").value
+            ];
+            
+            const mat = [
+                Number(document.getElementById("mat1").value),
+                Number(document.getElementById("mat2").value),
+                Number(document.getElementById("mat3").value),
+                Number(document.getElementById("mat4").value),
+                Number(document.getElementById("mat5").value)
+            ];
+
+            const pt = [
+                Number(document.getElementById("pt1").value),
+                Number(document.getElementById("pt2").value),
+                Number(document.getElementById("pt3").value),
+                Number(document.getElementById("pt4").value),
+                Number(document.getElementById("pt5").value)
+            ];
+
+            const his = [
+                Number(document.getElementById("his1").value),
+                Number(document.getElementById("his2").value),
+                Number(document.getElementById("his3").value),
+                Number(document.getElementById("his4").value),
+                Number(document.getElementById("his5").value)
+            ];
+
+            matrizNotas = [alunos, mat, pt, his];
+        }
+
+        function calcularMedia(materia) {
+            let soma = 0;
+            let media = 0;
+            let materiaIndex = 0;
+
+            switch (materia) {
+                case "mat":
+                    materiaIndex = 1;
+                    break;
+                case "pt":
+                    materiaIndex = 2;
+                    break;
+                case "his":
+                    materiaIndex = 3;
+                    break;
+            }
+
+            for (let i = 0; i < 5; i++) {
+                soma += matrizNotas[materiaIndex][i];
+            }
+
+            media = soma / 5;
+
+            let resultadoCategoria = "";
+            if (media >= 6) {
+                resultadoCategoria = "Aprovado";
+            } else if (media >= 4 && media < 6) {
+                resultadoCategoria = "Recuperação";
+            } else {
+                resultadoCategoria = "Reprovado";
+            }
+
+            result.textContent = `Média da disciplina ${materia}: ${media.toFixed(2)} - ${resultadoCategoria}`;
+        }
+
+        function verificarMateria() {
+            let materiaEscolhida = document.getElementById("materia").value;
+            calcularMedia(materiaEscolhida);
+        }
+    </script>
+  </body>
+</html>
